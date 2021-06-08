@@ -8,7 +8,7 @@ namespace UnitTestProject1
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void PruebaListaValoresCorrectos()
         {
             List<int> notas = new List<int>();
 
@@ -21,10 +21,66 @@ namespace UnitTestProject1
             notas.Add(8);
 
             double mediaEsperada = 5.143;
-            int susE = 3;
-            int aprE = 1;
-            int notE = 2;
-            int sbrE = 1;
+            int suspensosEsperados = 3;
+            int aprobadosEsperados = 1;
+            int notablesEsperados = 2;
+            int sobresalientesEsperados = 1;
+
+        }
+
+        [TestMethod]
+        public void PruebaListaVacia()
+        {
+            List<int> listaVacia = new List<int>();
+            double mediaNotas;
+
+            try
+            {
+                mediaNotas = CalculaEstadisticas(listaVacia);
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        [TestMethod]
+        public void PruebaValoresNegativos()
+        {
+            List<int> listaNotasMal = new List<int>();
+            double mediaNotas;
+
+            listaNotasMal.Add(-1);
+
+            try
+            {
+                mediaNotas = CalculaEstadisticas(listaNotasMal);
+            }
+            catch (Exception error )
+            {
+
+                throw;
+            }
+        }
+
+        public void PruebaValorMayor10()
+        {
+            List<int> listaNotasMal = new List<int>();
+            double mediaNotas;
+
+            listaNotasMal.Add(11);
+
+            try
+            {
+                mediaNotas = CalculaEstadisticas(listaNotasMal);
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

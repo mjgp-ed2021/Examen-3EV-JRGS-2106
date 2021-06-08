@@ -1,70 +1,84 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Examen3EV_NS
 {
-    public class estNot  // esta clase nos calcula las estadísticas de un conjunto de notas 
+    /// <summary>
+    /// Clase que calcula las estadísticas de un conjunto de notas
+    /// </summary>
+    public class EstadisticasNotasMJGP2021 
     {
-        public int sus;  // Suspensos
-        public int apr;  // Aprobados
-        public int not;  // Notables
-        public int sbr;  // Sobresalientes
+        private int suspensos;
+        private int aprobados;
+        private int notables;
+        private int sobresalientes;
 
-        public double media; // Nota media
+        private double media;
 
-        // Constructor vacío
-        public estNot()
+        public int Suspensos { get => suspensos; set => suspensos = value; }
+        public int Aprobados { get => aprobados; set => aprobados = value; }
+        public int Notables { get => notables; set => notables = value; }
+        public int Sobresalientes { get => sobresalientes; set => sobresalientes = value; }
+        public double Media { get => media; set => media = value; }
+
+        /// <summary>
+        /// Constructor sin parámetros.
+        /// Los miembros se inicializan a 0.
+        /// </summary>
+        public EstadisticasNotasMJGP2021()
         {
-            sus = apr = not = sbr = 0;  // inicializamos las variables
+            suspensos = aprobados = notables = sobresalientes = 0;
             media = 0.0;
         }
 
-        // Constructor a partir de un array, calcula las estadísticas al crear el objeto
-        public estNot(List<int> listnot)
+        /// <summary>
+        /// Constructor con parámetros.
+        /// Calcula las estadísticas al crear el objeto.
+        /// </summary>
+        /// <remarks>Este cálculo se realiza utilizando el método: calcEst, que valida los datos de la lista.</remarks>
+        /// <param name="listaNotas">Lista de tipo entero</param>
+        public EstadisticasNotasMJGP2021(List<int> listaNotas)
+        {
+            media = CalculaEstadisticas(listaNotas);
+        }
+
+        /// <summary>
+        /// Método que calcula las estadísticas, nota media
+        /// y el número de suspensos/aprobados/notables/sobresalientes
+        /// </summary>
+        /// <remarks>Valida que la lista no esté vacía y que los enteros estén entr 1 y 10.</remarks>
+        /// <param name="listaNotas">Lista de valores enteros.</param>
+        /// <returns>Si falla devuelve -1, en caso contrario devuelve la media.</returns>
+        public double CalculaEstadisticas(List<int> listaNotas)
         {
             media = 0.0;
 
-            for (int i = 0; i < listnot.Count; i++)
+            try
             {
-                if (listnot[i] < 5) sus++;              // Por debajo de 5 suspenso
-                else if (listnot[i] > 5 && listnot[i] < 7) apr++;// Nota para aprobar: 5
-                else if (listnot[i] > 7 && listnot[i] < 9) not++;// Nota para notable: 7
-                else if (listnot[i] > 9) sbr++;         // Nota para sobresaliente: 9
+                // TODO: hay que modificar el tratamiento de errores para generar excepciones
+                if (listaNotas.Count <= 0)  // Si la lista no contiene elementos, devolvemos un error
+                    return -1;
 
-                media = media + listnot[i];
+                for (int i = 0; i < 10; i++)
+                    if (listaNotas[i] < 0 || listaNotas[i] > 10)      // comprobamos que las not están entre 0 y 10 (mínimo y máximo), si no, error
+                        return -1;
+
+                for (int i = 0; i < listaNotas.Count; i++)
+                {
+                    if (listaNotas[i] < 5) suspensos++;              // Por debajo de 5 suspenso
+                    else if (listaNotas[i] >= 5 && listaNotas[i] < 7) aprobados++;// Nota para aprobar: 5
+                    else if (listaNotas[i] >= 7 && listaNotas[i] < 9) notables++;// Nota para notable: 7
+                    else if (listaNotas[i] > 9) sobresalientes++;         // Nota para sobresaliente: 9
+
+                    media = media + listaNotas[i];
+                }
+
+                media = media / listaNotas.Count;
             }
-
-            media = media / listnot.Count;
-        }
-
-
-        // Para un conjunto de listnot, calculamos las estadísticas
-        // calcula la media y el número de suspensos/aprobados/notables/sobresalientes
-        //
-        // El método devuelve -1 si ha habido algún problema, la media en caso contrario	
-        public double calcEst(List<int> listnot)
-        {                                 
-            media = 0.0;
-
-            // TODO: hay que modificar el tratamiento de errores para generar excepciones
-            //
-            if (listnot.Count <= 0)  // Si la lista no contiene elementos, devolvemos un error
-                return -1;
-
-            for (int i=0;i<10;i++)
-                if (listnot[i] < 0 || listnot[i] > 10)      // comprobamos que las not están entre 0 y 10 (mínimo y máximo), si no, error
-                return -1;
-
-            for (int i = 0; i < listnot.Count; i++)
+            catch (Exception error)
             {
-                if (listnot[i] < 5) sus++;              // Por debajo de 5 suspenso
-                else if (listnot[i] >= 5 && listnot[i] < 7) apr++;// Nota para aprobar: 5
-                else if (listnot[i] >= 7 && listnot[i] < 9) not++;// Nota para notable: 7
-                else if (listnot[i] > 9) sbr++;         // Nota para sobresaliente: 9
-
-                media = media + listnot[i];
+                throw;
             }
-
-            media = media / listnot.Count;
 
             return media;
         }
