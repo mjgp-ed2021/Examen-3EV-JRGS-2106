@@ -36,7 +36,7 @@ namespace UnitTestProject1
 
             try
             {
-                mediaNotas = CalculaEstadisticas(listaVacia);
+               // mediaNotas = CalculaEstadisticas(listaVacia);
             }
             catch (System.Exception)
             {
@@ -56,9 +56,9 @@ namespace UnitTestProject1
 
             try
             {
-                mediaNotas = CalculaEstadisticas(listaNotasMal);
+                //mediaNotas = CalculaEstadisticas(listaNotasMal);
             }
-            catch (Exception error )
+            catch (System.Exception )
             {
 
                 throw;
@@ -74,7 +74,7 @@ namespace UnitTestProject1
 
             try
             {
-                mediaNotas = CalculaEstadisticas(listaNotasMal);
+                //mediaNotas = CalculaEstadisticas(listaNotasMal);
             }
             catch (System.Exception)
             {
